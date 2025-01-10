@@ -7,13 +7,13 @@ import {
   sendMessage,
 } from "@/app/actions/chat";
 import { useWhoop } from "@/hooks/use-whoop";
-import { Workout } from "@/lib/types";
+import { Sleep, Workout } from "@/lib/types";
 
 export function useChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { profile, recentWorkouts } = useWhoop();
+  const { profile, recentWorkouts, recentSleeps } = useWhoop();
 
   const addMessage = async (content: string) => {
     try {
@@ -28,6 +28,7 @@ export function useChat() {
         firstName: profile.firstName,
         lastName: profile.lastName,
         workouts: recentWorkouts as Workout[],
+        sleep: recentSleeps as Sleep[],
       });
 
       setMessages([...newMessages, response]);

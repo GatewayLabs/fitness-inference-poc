@@ -1,14 +1,19 @@
 import { useState, useEffect } from "react";
 import { generateWhoopAuthUrl, getWhoopTokens } from "@/lib/whoop/auth";
-import { getRecentWorkouts, getUserProfile } from "@/lib/whoop/api";
-import { Workout } from "@/lib/types";
+import {
+  getRecentSleeps,
+  getRecentWorkouts,
+  getUserProfile,
+} from "@/lib/whoop/api";
+import { Sleep, Workout } from "@/lib/types";
 
 export interface WhoopState {
   isConnected: boolean;
   isLoading: boolean;
   error: string | null;
   profile: any | null;
-  recentWorkouts: any[] | null;
+  recentWorkouts: Workout[] | null;
+  recentSleeps: Sleep[] | null;
 }
 
 export function useWhoop() {
@@ -18,6 +23,7 @@ export function useWhoop() {
     error: null,
     profile: null,
     recentWorkouts: null,
+    recentSleeps: null,
   });
 
   useEffect(() => {
@@ -29,9 +35,10 @@ export function useWhoop() {
           return;
         }
 
-        const [profile, workouts] = await Promise.all([
+        const [profile, workouts, sleeps] = await Promise.all([
           getUserProfile(),
           getRecentWorkouts(5),
+          getRecentSleeps(5),
         ]);
 
         setState({
@@ -40,6 +47,7 @@ export function useWhoop() {
           error: null,
           profile,
           recentWorkouts: workouts.records as Workout[],
+          recentSleeps: sleeps.records as Sleep[],
         });
       } catch (error) {
         setState((prev) => ({
@@ -65,6 +73,7 @@ export function useWhoop() {
       error: null,
       profile: null,
       recentWorkouts: null,
+      recentSleeps: null,
     });
   };
 

@@ -8,7 +8,7 @@ import {
   prepareConfidentialRequest,
   decryptResponse,
 } from "@/lib/atoma";
-import { Workout } from "@/lib/types";
+import { Sleep, Workout } from "@/lib/types";
 import { whoopActivities } from "@/lib/utils";
 
 export type Message = {
@@ -73,11 +73,10 @@ export async function sendMessage(
     firstName: string;
     lastName: string;
     workouts: Workout[];
+    sleep: Sleep[];
   }
 ) {
   try {
-    const content = JSON.stringify(context);
-
     const contextMessage = {
       role: "system",
       content: `
@@ -100,6 +99,19 @@ export async function sendMessage(
         - **Start:** ${workout.start}
         - **Timezone Offset:** ${workout.timezone_offset}
         - **Updated At:** ${workout.updated_at}
+      `
+        )
+        .join("\n")}
+      
+      ## **Sleep History**
+      ${context?.sleep
+        .map(
+          (sleep) => `
+        - **Start:** ${sleep.start}
+        - **End:** ${sleep.end}
+        - **Score:** ${JSON.stringify(sleep.score)}
+        - **Score State:** ${sleep.score_state}
+        - **Updated At:** ${sleep.updated_at}
       `
         )
         .join("\n")}

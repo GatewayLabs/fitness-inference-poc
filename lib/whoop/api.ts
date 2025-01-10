@@ -36,6 +36,10 @@ export const getRecentRecoveries = async (limit = 10) => {
   return whoopFetch(`/v1/recovery?limit=${limit}`);
 };
 
+export const getRecentSleeps = async (limit = 10) => {
+  return whoopFetch(`/v1/activity/sleep?limit=${limit}`);
+};
+
 export const getUserProfile = async () => {
   return whoopFetch("/v1/user/profile/basic");
 };
