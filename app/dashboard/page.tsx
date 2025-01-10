@@ -35,6 +35,7 @@ import { useRouter } from "next/navigation";
 import { saveWhoopTokens, validateState } from "@/lib/whoop/auth";
 import { Workout } from "@/lib/types";
 import { whoopActivities } from "@/lib/utils";
+import { Chat } from "@/components/Chat";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -366,55 +367,7 @@ export default function Dashboard() {
         </div>
 
         {/* AI Coach Section */}
-        <Card className="p-6 border-none bg-gray-50">
-          <div className="flex items-center gap-2 mb-4">
-            <Brain className="h-5 w-5" />
-            <h2 className="text-xl font-semibold">AI Fitness Coach</h2>
-          </div>
-
-          <ScrollArea className="h-[300px] mb-4 pr-4">
-            <div className="space-y-4">
-              {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={`flex ${
-                    message.role === "user" ? "justify-end" : "justify-start"
-                  }`}
-                >
-                  <div
-                    className={`max-w-[80%] rounded-lg p-3 ${
-                      message.role === "user"
-                        ? "bg-black text-white"
-                        : "bg-white"
-                    }`}
-                  >
-                    {message.content}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </ScrollArea>
-
-          <div className="flex gap-2">
-            <Input
-              placeholder="Ask your AI coach..."
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  handleSend();
-                }
-              }}
-            />
-            <Button
-              onClick={handleSend}
-              disabled={!input.trim()}
-              className="bg-black text-white hover:bg-gray-800"
-            >
-              Send
-            </Button>
-          </div>
-        </Card>
+        <Chat />
       </div>
     </div>
   );
