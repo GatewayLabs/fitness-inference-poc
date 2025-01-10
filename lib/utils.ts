@@ -1,9 +1,46 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { Workout } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+const formatDuration = (milliseconds: number): string => {
+  const hours = Math.floor(milliseconds / (1000 * 60 * 60));
+  const minutes = Math.floor((milliseconds % (1000 * 60 * 60)) / (1000 * 60));
+  return `${hours}h ${minutes}m`;
+};
+
+export const getWorkoutMetrics = (workout: Workout) => ({
+  type:
+    whoopActivities.find((a) => a.id === workout.sport_id)?.name || "Activity",
+  difficulty: workout.score?.strain
+    ? workout.score.strain > 15
+      ? "High"
+      : workout.score.strain > 8
+      ? "Medium"
+      : "Low"
+    : "N/A",
+  totalTime: workout
+    ? Math.round(
+        (new Date(workout.end).getTime() - new Date(workout.start).getTime()) /
+          (1000 * 60)
+      )
+    : 0,
+  calories: workout.score?.kilojoule
+    ? Math.round(workout.score.kilojoule / 4.184)
+    : 0,
+});
+
+export const getSleepMetrics = (sleep: any) => ({
+  totalTime: formatDuration(
+    sleep.score?.stage_summary?.total_in_bed_time_milli || 0
+  ),
+  cycles: sleep.score?.stage_summary?.sleep_cycle_count || 0,
+  efficiency: `${Math.round(sleep.score?.sleep_efficiency_percentage || 0)}%`,
+  respiratoryRate: sleep.score?.respiratory_rate?.toFixed(1) || "--",
+});
 
 export const whoopActivities = [
   { id: -1, name: "Activity" },
