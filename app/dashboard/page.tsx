@@ -5,17 +5,12 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
-  Brain,
   Activity,
-  Heart,
   Dumbbell,
   Timer,
   Flame,
-  ChevronRight,
   Shield,
   Database,
-  Play,
-  Pause,
   WatchIcon,
 } from "lucide-react";
 import {
@@ -27,8 +22,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { format, parseISO } from "date-fns";
 import { useWhoop } from "@/hooks/use-whoop";
 import { useRouter } from "next/navigation";
@@ -39,8 +32,7 @@ import { Chat } from "@/components/Chat";
 
 export default function Dashboard() {
   const router = useRouter();
-  const { isConnected, isLoading, error, profile, recentWorkouts } = useWhoop();
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { profile, recentWorkouts } = useWhoop();
   const [selectedWorkout, setSelectedWorkout] = useState(0);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([
@@ -83,24 +75,6 @@ export default function Dashboard() {
         },
       ].filter((zone) => zone.duration > 0)
     : [];
-
-  const handleSend = () => {
-    if (!input.trim()) return;
-    setMessages([...messages, { role: "user", content: input }]);
-    setInput("");
-    // Simulate AI response
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          content: `Based on your latest Whoop data, your workout intensity was ${
-            currentWorkout?.score?.strain || "not recorded"
-          }. Let's focus on recovery and proper form for your next session.`,
-        },
-      ]);
-    }, 1000);
-  };
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.location.hash) {
@@ -151,8 +125,8 @@ export default function Dashboard() {
   });
 
   return (
-    <div className="min-h-screen bg-white p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-h-screen bg-white p-6">
+      <div className="max-w-7xl mx-auto h-[calc(100vh-48px)] flex flex-col gap-6">
         {/* Header */}
         <div className="flex justify-between items-center mb-8 gap-4">
           <div className="flex items-center space-x-8">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
 import { useChat } from "@/hooks/use-chat";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,13 +26,13 @@ export function Chat() {
   };
 
   return (
-    <Card className="p-6 border-none bg-gray-50">
+    <Card className="p-6 border-none bg-gray-50 flex flex-col flex-grow overflow-hidden">
       <div className="flex items-center gap-2 mb-4">
         <Brain className="h-5 w-5" />
         <h2 className="text-xl font-semibold">AI Fitness Coach</h2>
       </div>
 
-      <ScrollArea className="h-[300px] mb-4 pr-4">
+      <ScrollArea className="mb-4 pr-4 flex-grow">
         <div className="space-y-4">
           {messages.map((message, index) => (
             <div
@@ -42,10 +43,34 @@ export function Chat() {
             >
               <div
                 className={`max-w-[80%] rounded-lg p-3 ${
-                  message.role === "user" ? "bg-black text-white" : "bg-white"
+                  message.role === "user"
+                    ? "bg-black text-white"
+                    : "bg-white prose prose-sm max-w-none"
                 }`}
               >
-                {message.content}
+                {message.role === "user" ? (
+                  <p className="m-0">{message.content}</p>
+                ) : (
+                  <ReactMarkdown
+                    className="m-0"
+                    components={{
+                      p: ({ children }) => (
+                        <p className="mb-2 last:mb-0">{children}</p>
+                      ),
+                      ul: ({ children }) => (
+                        <ul className="mb-2 last:mb-0 pl-4">{children}</ul>
+                      ),
+                      ol: ({ children }) => (
+                        <ol className="mb-2 last:mb-0 pl-4">{children}</ol>
+                      ),
+                      li: ({ children }) => (
+                        <li className="mb-1 last:mb-0">{children}</li>
+                      ),
+                    }}
+                  >
+                    {message.content}
+                  </ReactMarkdown>
+                )}
               </div>
             </div>
           ))}
