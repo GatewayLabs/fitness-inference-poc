@@ -37,8 +37,8 @@ export function useWhoop() {
 
         const [profile, workouts, sleeps] = await Promise.all([
           getUserProfile(),
-          getRecentWorkouts(5),
-          getRecentSleeps(5),
+          getRecentWorkouts(15),
+          getRecentSleeps(15),
         ]);
 
         setState({

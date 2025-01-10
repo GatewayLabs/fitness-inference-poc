@@ -1,4 +1,3 @@
-// components/SleepSidebar.tsx
 "use client";
 
 import { Card } from "@/components/ui/card";
@@ -25,7 +24,7 @@ export function SleepSidebar({
       <Card className="p-6 border-none bg-gray-50">
         <h3 className="font-medium mb-4">RECENT SLEEP</h3>
         <div className="space-y-4">
-          {recentSleeps?.slice(0, 4).map((sleep, i) => {
+          {recentSleeps?.slice(0, 5).map((sleep, i) => {
             const metrics = getSleepMetrics(sleep);
             return (
               <div

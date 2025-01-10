@@ -24,7 +24,7 @@ export function WorkoutSidebar({
       <Card className="p-6 border-none bg-gray-50">
         <h3 className="font-medium mb-4">RECENT WORKOUTS</h3>
         <div className="space-y-4">
-          {recentWorkouts?.slice(0, 4).map((workout, i) => {
+          {recentWorkouts?.slice(0, 5).map((workout, i) => {
             const metrics = getWorkoutMetrics(workout);
             return (
               <div
