@@ -1,20 +1,17 @@
 import { getWhoopTokens } from "./auth";
 
-const WHOOP_API_BASE = "https://api.prod.whoop.com/developer";
-
 const whoopFetch = async (endpoint: string, options: RequestInit = {}) => {
   const tokens = getWhoopTokens();
   if (!tokens) {
     throw new Error("Not authenticated with Whoop");
   }
 
-  const response = await fetch(`${WHOOP_API_BASE}${endpoint}`, {
+  const response = await fetch(`/api/whoop/${endpoint.replace(/^\//, "")}`, {
     ...options,
     headers: {
       ...options.headers,
       Authorization: `Bearer ${tokens.access_token}`,
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
     },
   });
 
@@ -26,25 +23,17 @@ const whoopFetch = async (endpoint: string, options: RequestInit = {}) => {
 };
 
 export const getRecentWorkouts = async (limit = 10) => {
-  return whoopFetch(`/v1/activity/workout?limit=${limit}`);
-};
-
-export const getRecentCycles = async (limit = 10) => {
-  return whoopFetch(`/v1/cycle?limit=${limit}`);
-};
-
-export const getRecentRecoveries = async (limit = 10) => {
-  return whoopFetch(`/v1/recovery?limit=${limit}`);
+  return whoopFetch(`v1/activity/workout?limit=${limit}`);
 };
 
 export const getRecentSleeps = async (limit = 10) => {
-  return whoopFetch(`/v1/activity/sleep?limit=${limit}`);
+  return whoopFetch(`v1/activity/sleep?limit=${limit}`);
 };
 
 export const getUserProfile = async () => {
-  return whoopFetch("/v1/user/profile/basic");
+  return whoopFetch("v1/user/profile/basic");
 };
 
 export const getBodyMeasurements = async () => {
-  return whoopFetch("/v1/user/measurement/body");
+  return whoopFetch("v1/user/measurement/body");
 };

@@ -1,4 +1,3 @@
-// app/api/auth/whoop/callback/route.ts
 import { WHOOP_AUTH_CONFIG } from "@/lib/whoop/auth";
 import { NextRequest } from "next/server";
 
