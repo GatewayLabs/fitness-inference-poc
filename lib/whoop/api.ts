@@ -14,6 +14,7 @@ const whoopFetch = async (endpoint: string, options: RequestInit = {}) => {
       ...options.headers,
       Authorization: `Bearer ${tokens.access_token}`,
       "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
     },
   });
 
