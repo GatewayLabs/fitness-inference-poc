@@ -26,7 +26,7 @@ export function Chat() {
   };
 
   return (
-    <Card className="p-6 border-none bg-gray-50 flex flex-col flex-grow overflow-hidden">
+    <Card className="p-6 border-none bg-gray-50 flex flex-col flex-grow overflow-hidden min-h-fit">
       <div className="flex items-center gap-2 mb-4">
         <Brain className="h-5 w-5" />
         <h2 className="text-xl font-semibold">AI Fitness Coach</h2>

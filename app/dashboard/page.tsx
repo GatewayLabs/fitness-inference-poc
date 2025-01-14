@@ -51,7 +51,7 @@ export default function Dashboard() {
   }, [router]);
 
   return (
-    <div className="max-h-screen bg-white p-6">
+    <div className="p-6 bg-white">
       <div className="max-w-7xl mx-auto h-[calc(100vh-48px)] flex flex-col gap-6">
         {/* Header */}
         <div className="flex justify-between items-center mb-8 gap-4">
